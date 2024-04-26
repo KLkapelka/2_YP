@@ -1,70 +1,54 @@
-﻿using System;
-
-class Student // объектный класс 
+﻿class Program
 {
-    // свойство
-    public string lastName { get; set; } // фамилия. {чтение, изменения}
-    public DateTime dateOfBirth { get; set; } // дата рождения
-    public int groupNumber { get; set; } // номер группы
-    public int[] grades { get; set; } = new int[4]; // оценки
+    public float number { get; set; } // число
+    public string text { get; set; } // текст
 
-    public void Сonclusion() // вывод инфы о студенте
+    // Конструктор с входными параметрами
+    public Program(float number, string text)
     {
-        Console.WriteLine($"Фамилия: {lastName}");
-        Console.WriteLine($"Дата рождения: {dateOfBirth}");
-        Console.WriteLine($"Номер группы: {groupNumber}");
-        Console.Write("Оценки: ");
-        foreach (int i in grades)
-        {
-            Console.Write(i + " ");
-        }
-        Console.WriteLine();
+        this.number = number; // прсвоить number
+        this.text = text; // прсвоить text
     }
+
+    // Конструктор свойств по умолчанию
+    public Program()
+    {
+        this.number = 0; // прсвоить number = 0
+        this.text = "Null"; // прсвоить text = Null
+    }
+
+    // Деструктор удалено
+    ~Program()
+    {
+        Console.WriteLine("Объект был удален"); // вывод
+    }
+
+    // вывод
+    public void ConclusionInformation()
+    {
+        Console.WriteLine($"Число: {number}, Текст: {text}"); // вывод
+    }  
 }
 
-class Program_1
+class Conclusion
 {
     static void Main()
     {
-        Student student = new Student(); // Вызывает конструктор по умолчанию и присваивает ссылку. Оператор создание объектса
+        Console.WriteLine("Введите число:"); // вывод
+        float num = float.Parse(Console.ReadLine()); // данные
+        Console.WriteLine("Введите текст: "); // вывод
+        string tex = Console.ReadLine(); // данные
 
-        Console.Write("Введите фамилию студента: "); // вывод
-        student.lastName = Console.ReadLine(); // ввод фамилии. объект.свойство = (запись)
-        Console.Write("Введите дату рождения учащегося (гггг-мм-дд): "); // вывод
-        student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод  даты
-        Console.Write("Введите номер группы студента: "); // вывод
-        student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
+        Console.WriteLine("\nСоздание объекта с параметрами:"); // вывод
+        Program program1 = new Program(num, tex); // принимающий Program
+        program1.ConclusionInformation(); // вывод
 
-        Console.WriteLine("Введите оценки учащегося (4 цифр, разделенных пробелом): "); // вывод
-        string[] gradeInputs = Console.ReadLine().Split(' '); // ввод оценок. переменная = берёт строку.Разбивает через(' ')
-        for (int i = 0; i < 4; i++) // проход по Grades
-        {
-            student.grades[i] = int.Parse(gradeInputs[i]); // Grades[i] = в инт.преобразует(из gradeInputs[i])
-        }
+        Console.WriteLine("\nСоздание объекта с использованием конструктора по умолчанию:"); // вывод
+        Program program2 = new Program(); // пустой Program
+        program2.ConclusionInformation(); // вывод
 
-        student.Сonclusion(); // метод вывода информации
-        
-        // функция изменения
-        while(true)
-        {
-            Console.WriteLine("Хотите изменить данные?(yes, no)"); // ввод
-            string answer = Console.ReadLine(); // ответ
-
-            if (answer == "yes")
-            {
-                Console.WriteLine("Введите новую фамилию для студента: "); // вывод
-                student.lastName = Console.ReadLine(); // ввод фамилии
-                Console.WriteLine("Введите новую дату рождения учащегося (гггг-мм-дд): "); // вывод
-                student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод даты
-                Console.WriteLine("Введите новый номер группы для учащегося: "); // вывод
-                student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-                student.Сonclusion(); // метод вывода информации
-            }
-            else
-            {
-                return; // возврат
-            }
-        }
+        GC.Collect(); // очистка памяти под объект
+        Console.Read(); // задержка через tnter
+        Console.WriteLine("Объект удалён"); // вывод
     }
 }

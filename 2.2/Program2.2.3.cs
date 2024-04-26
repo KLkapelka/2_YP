@@ -1,69 +1,59 @@
-﻿using System;
-
-class Student // объектный класс 
+﻿class NumberAndData
 {
-    // свойство
-    public string lastName { get; set; } // фамилия. {чтение, изменения}
-    public DateTime dateOfBirth { get; set; } // дата рождения
-    public int groupNumber { get; set; } // номер группы
-    public int[] grades { get; set; } = new int[4]; // оценки
+    public float number1 { get; set; } // число 1
+    public float number2 { get; set; } // число 2
 
-    public void Сonclusion() // вывод инфы о студенте
+    public void Сonclusion() // вывод чисел
     {
-        Console.WriteLine($"Фамилия: {lastName}");
-        Console.WriteLine($"Дата рождения: {dateOfBirth}");
-        Console.WriteLine($"Номер группы: {groupNumber}");
-        Console.Write("Оценки: ");
-        foreach (int i in grades)
-        {
-            Console.Write(i + " ");
-        }
-        Console.WriteLine();
+        Console.WriteLine($"Число 1: {number1} \nЧисло 2: {number2}"); // число 1 и 2
+        Console.WriteLine($"Сумма чисел: {SumNumbers()}"); // сумма чисел
+        Console.WriteLine($"Максимальное число: {LargestNumber()}"); // max
+        Console.WriteLine(); // разделитель
+    }
+
+    public float SumNumbers() // сумма чисел
+    {
+        return number1 + number2;
+    }
+
+    public float LargestNumber() // max
+    {
+        return Math.Max(number1, number2);
     }
 }
 
-class Program_1
+class Program 
 {
     static void Main()
     {
-        Student student = new Student(); // Вызывает конструктор по умолчанию и присваивает ссылку. Оператор создание объектса
-
-        Console.Write("Введите фамилию студента: "); // вывод
-        student.lastName = Console.ReadLine(); // ввод фамилии. объект.свойство = (запись)
-        Console.Write("Введите дату рождения учащегося (гггг-мм-дд): "); // вывод
-        student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод  даты
-        Console.Write("Введите номер группы студента: "); // вывод
-        student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-        Console.WriteLine("Введите оценки учащегося (4 цифр, разделенных пробелом): "); // вывод
-        string[] gradeInputs = Console.ReadLine().Split(' '); // ввод оценок. переменная = берёт строку.Разбивает через(' ')
-        for (int i = 0; i < 4; i++) // проход по Grades
+        NumberAndData numberAndData = new NumberAndData(); // ссылка
+        while(true) 
         {
-            student.grades[i] = int.Parse(gradeInputs[i]); // Grades[i] = в инт.преобразует(из gradeInputs[i])
-        }
-
-        student.Сonclusion(); // метод вывода информации
-        
-        // функция изменения
-        while(true)
-        {
-            Console.WriteLine("Хотите изменить данные?(yes, no)"); // ввод
-            string answer = Console.ReadLine(); // ответ
-
-            if (answer == "yes")
+            Console.WriteLine($"Изменение чисел введите: 1 \nСумма чисел введите: 2 \nМаксимальное число: 3 \nЗакончить: 0");
+            int answer = int.Parse(Console.ReadLine()); // ответ
+            
+            if(answer == 1)
             {
-                Console.WriteLine("Введите новую фамилию для студента: "); // вывод
-                student.lastName = Console.ReadLine(); // ввод фамилии
-                Console.WriteLine("Введите новую дату рождения учащегося (гггг-мм-дд): "); // вывод
-                student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод даты
-                Console.WriteLine("Введите новый номер группы для учащегося: "); // вывод
-                student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-                student.Сonclusion(); // метод вывода информации
+                Console.Write("Введите первое число: "); // вывод
+                numberAndData.number1 = float.Parse(Console.ReadLine()); // ввод числа
+                Console.Write("Введите второе число: "); // вывод
+                numberAndData.number2 = float.Parse(Console.ReadLine()); // ввод числа
+                Console.WriteLine(); // разделитель
+                numberAndData.Сonclusion(); // вывод
             }
-            else
+            else if(answer == 2)
             {
-                return; // возврат
+                Console.WriteLine($"Сумма чисел: {numberAndData.SumNumbers()}"); // сумма чисел
+                Console.WriteLine(); // разделитель
+            }
+            else if(answer == 3)
+            {
+                Console.WriteLine($"Максимальное число: {numberAndData.LargestNumber()}"); // max
+                Console.WriteLine(); // разделитель
+            }
+            else if(answer == 0)
+            {
+                return; // выход из цикла
             }
         }
     }
