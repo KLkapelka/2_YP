@@ -1,70 +1,66 @@
-﻿using System;
-
-class Student // объектный класс 
+﻿class Worker
 {
-    // свойство
-    public string lastName { get; set; } // фамилия. {чтение, изменения}
-    public DateTime dateOfBirth { get; set; } // дата рождения
-    public int groupNumber { get; set; } // номер группы
-    public int[] grades { get; set; } = new int[4]; // оценки
+    private string name = "Трик";  // имя
+    private string surname = "Киллуа"; // фамилия
+    private string rate = "Киберспортсмен"; // должность
+    private int days = 5; // количество отработанных дней
 
-    public void Сonclusion() // вывод инфы о студенте
+    // геттеры
+    public string GetName() // имя
     {
-        Console.WriteLine($"Фамилия: {lastName}");
-        Console.WriteLine($"Дата рождения: {dateOfBirth}");
-        Console.WriteLine($"Номер группы: {groupNumber}");
-        Console.Write("Оценки: ");
-        foreach (int i in grades)
-        {
-            Console.Write(i + " ");
-        }
-        Console.WriteLine();
+        return name;
     }
-}
 
-class Program_1
-{
+    public string GetSurname() // фамилия
+    {
+        return surname;
+    }
+
+    public string GetRate() // должность
+    {
+        return rate;
+    }
+
+    public int GetDays() // дни
+    {
+        return days;
+    }
+
+    // конструктор
+    public Worker(string name, string surname, string rate, int days)
+    {
+        this.name = name;
+        this.surname = surname;
+        this.rate = rate;
+        this.days = days;
+    }
+
+    // ЗП
+    public void GetSalary()
+    {
+        int money = 0;  // счётчик
+        switch (rate)
+        {
+            case "Курато":
+                money = 1000;
+                break;
+            case "Спикер":
+                money = 800;
+                break;
+            case "Киберспортсмен":
+                money = 1100;
+                break;
+            default:
+                break;
+        }
+
+        Console.WriteLine($"Зарплата {GetName()} {GetSurname()} составляет {money * GetDays()}"); //  вывод
+    }
+
     static void Main()
     {
-        Student student = new Student(); // Вызывает конструктор по умолчанию и присваивает ссылку. Оператор создание объектса
-
-        Console.Write("Введите фамилию студента: "); // вывод
-        student.lastName = Console.ReadLine(); // ввод фамилии. объект.свойство = (запись)
-        Console.Write("Введите дату рождения учащегося (гггг-мм-дд): "); // вывод
-        student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод  даты
-        Console.Write("Введите номер группы студента: "); // вывод
-        student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-        Console.WriteLine("Введите оценки учащегося (4 цифр, разделенных пробелом): "); // вывод
-        string[] gradeInputs = Console.ReadLine().Split(' '); // ввод оценок. переменная = берёт строку.Разбивает через(' ')
-        for (int i = 0; i < 4; i++) // проход по Grades
-        {
-            student.grades[i] = int.Parse(gradeInputs[i]); // Grades[i] = в инт.преобразует(из gradeInputs[i])
-        }
-
-        student.Сonclusion(); // метод вывода информации
-        
-        // функция изменения
-        while(true)
-        {
-            Console.WriteLine("Хотите изменить данные?(yes, no)"); // ввод
-            string answer = Console.ReadLine(); // ответ
-
-            if (answer == "yes")
-            {
-                Console.WriteLine("Введите новую фамилию для студента: "); // вывод
-                student.lastName = Console.ReadLine(); // ввод фамилии
-                Console.WriteLine("Введите новую дату рождения учащегося (гггг-мм-дд): "); // вывод
-                student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод даты
-                Console.WriteLine("Введите новый номер группы для учащегося: "); // вывод
-                student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-                student.Сonclusion(); // метод вывода информации
-            }
-            else
-            {
-                return; // возврат
-            }
-        }
+        Worker worker = new Worker("Трик", "Киллуа", "Киберспортсмен", 5); // вызов конструктора
+        worker.GetSalary(); // расчёт ЗП и вывод
     }
 }
+ 

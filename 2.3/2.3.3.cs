@@ -1,70 +1,55 @@
-﻿using System;
-
-class Student // объектный класс 
+﻿public class Calculation
 {
-    // свойство
-    public string lastName { get; set; } // фамилия. {чтение, изменения}
-    public DateTime dateOfBirth { get; set; } // дата рождения
-    public int groupNumber { get; set; } // номер группы
-    public int[] grades { get; set; } = new int[4]; // оценки
+    private string calculationLine; // строка
 
-    public void Сonclusion() // вывод инфы о студенте
+    // методы
+    // изменение значния
+    public void SetCalculationLine(string variable)
     {
-        Console.WriteLine($"Фамилия: {lastName}");
-        Console.WriteLine($"Дата рождения: {dateOfBirth}");
-        Console.WriteLine($"Номер группы: {groupNumber}");
-        Console.Write("Оценки: ");
-        foreach (int i in grades)
-        {
-            Console.Write(i + " ");
-        }
-        Console.WriteLine();
+        this.calculationLine = variable; // calculationLine = значению
+    }
+
+    // символ в конец строки
+    public void SetLastSymbolCalculationLine(string symbol)
+    {
+        calculationLine += symbol; // calculationLine с symbol
+    }
+
+    // вывод свойства
+    public string GetCalculationLine()
+    {
+        return calculationLine; // вернуть свойство
+    }
+
+    // последний символ
+    public char GetLastSymbol() // char - один символ
+    {
+        return calculationLine[calculationLine.Length - 1]; // строка[возварт длины строки - 1] = символ по индексу строки
+    }
+
+    // удаоение последнего символа
+    public void DeleteLastSymbol()
+    {
+        calculationLine = calculationLine.Substring(0, calculationLine.Length - 1); // строка.метод извлечения подстроки из строки(индекс от, индекс до)
     }
 }
 
-class Program_1
+class Program
 {
     static void Main()
     {
-        Student student = new Student(); // Вызывает конструктор по умолчанию и присваивает ссылку. Оператор создание объектса
+        Calculation calculation = new Calculation(); // ссылка
 
-        Console.Write("Введите фамилию студента: "); // вывод
-        student.lastName = Console.ReadLine(); // ввод фамилии. объект.свойство = (запись)
-        Console.Write("Введите дату рождения учащегося (гггг-мм-дд): "); // вывод
-        student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод  даты
-        Console.Write("Введите номер группы студента: "); // вывод
-        student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
+        calculation.SetCalculationLine("Руки дизоляторы"); // метод присвоения
+        Console.WriteLine($"Строка: {calculation.GetCalculationLine()}"); // вывод
 
-        Console.WriteLine("Введите оценки учащегося (4 цифр, разделенных пробелом): "); // вывод
-        string[] gradeInputs = Console.ReadLine().Split(' '); // ввод оценок. переменная = берёт строку.Разбивает через(' ')
-        for (int i = 0; i < 4; i++) // проход по Grades
-        {
-            student.grades[i] = int.Parse(gradeInputs[i]); // Grades[i] = в инт.преобразует(из gradeInputs[i])
-        }
+        calculation.SetLastSymbolCalculationLine("!"); // метод символа в строку
+        Console.WriteLine($"Строка + символ: {calculation.GetCalculationLine()}"); // вывод
 
-        student.Сonclusion(); // метод вывода информации
-        
-        // функция изменения
-        while(true)
-        {
-            Console.WriteLine("Хотите изменить данные?(yes, no)"); // ввод
-            string answer = Console.ReadLine(); // ответ
+        char symbolLast = calculation.GetLastSymbol(); // symbolLast = метод последний символ
+        Console.WriteLine($"Ласт символ: {symbolLast}"); // вывод
 
-            if (answer == "yes")
-            {
-                Console.WriteLine("Введите новую фамилию для студента: "); // вывод
-                student.lastName = Console.ReadLine(); // ввод фамилии
-                Console.WriteLine("Введите новую дату рождения учащегося (гггг-мм-дд): "); // вывод
-                student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод даты
-                Console.WriteLine("Введите новый номер группы для учащегося: "); // вывод
-                student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-                student.Сonclusion(); // метод вывода информации
-            }
-            else
-            {
-                return; // возврат
-            }
-        }
+        calculation.DeleteLastSymbol(); // метод удаление символа
+        Console.WriteLine($"Строка - символ: {calculation.GetCalculationLine()}"); // вывод
     }
 }
