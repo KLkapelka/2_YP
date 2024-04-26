@@ -1,70 +1,41 @@
-﻿using System;
-
-class Student // объектный класс 
-{
-    // свойство
-    public string lastName { get; set; } // фамилия. {чтение, изменения}
-    public DateTime dateOfBirth { get; set; } // дата рождения
-    public int groupNumber { get; set; } // номер группы
-    public int[] grades { get; set; } = new int[4]; // оценки
-
-    public void Сonclusion() // вывод инфы о студенте
-    {
-        Console.WriteLine($"Фамилия: {lastName}");
-        Console.WriteLine($"Дата рождения: {dateOfBirth}");
-        Console.WriteLine($"Номер группы: {groupNumber}");
-        Console.Write("Оценки: ");
-        foreach (int i in grades)
-        {
-            Console.Write(i + " ");
-        }
-        Console.WriteLine();
-    }
-}
-
-class Program_1
+﻿class Program
 {
     static void Main()
     {
-        Student student = new Student(); // Вызывает конструктор по умолчанию и присваивает ссылку. Оператор создание объектса
+        Console.WriteLine("Ввкдите римское число: "); // вывод
+        string line = Console.ReadLine(); // число на римском
+        char[] romanNumber = line.ToCharArray(); // ... перевод в массив
+        int arabic = 0; // арабское число
 
-        Console.Write("Введите фамилию студента: "); // вывод
-        student.lastName = Console.ReadLine(); // ввод фамилии. объект.свойство = (запись)
-        Console.Write("Введите дату рождения учащегося (гггг-мм-дд): "); // вывод
-        student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод  даты
-        Console.Write("Введите номер группы студента: "); // вывод
-        student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-        Console.WriteLine("Введите оценки учащегося (4 цифр, разделенных пробелом): "); // вывод
-        string[] gradeInputs = Console.ReadLine().Split(' '); // ввод оценок. переменная = берёт строку.Разбивает через(' ')
-        for (int i = 0; i < 4; i++) // проход по Grades
+        // проходимся по romanNumber
+        for (int i = 0; i < romanNumber.Length - 1; i++)
         {
-            student.grades[i] = int.Parse(gradeInputs[i]); // Grades[i] = в инт.преобразует(из gradeInputs[i])
-        }
-
-        student.Сonclusion(); // метод вывода информации
-        
-        // функция изменения
-        while(true)
-        {
-            Console.WriteLine("Хотите изменить данные?(yes, no)"); // ввод
-            string answer = Console.ReadLine(); // ответ
-
-            if (answer == "yes")
+            int currentValue = translatingNumbers(romanNumber[i]); // переменная = число по индексу
+            if (i + 1 < romanNumber.Length && translatingNumbers(romanNumber[i + 1]) > currentValue) // если длинна не превышает romanNumber И число(i + 1) > i
             {
-                Console.WriteLine("Введите новую фамилию для студента: "); // вывод
-                student.lastName = Console.ReadLine(); // ввод фамилии
-                Console.WriteLine("Введите новую дату рождения учащегося (гггг-мм-дд): "); // вывод
-                student.dateOfBirth = DateTime.Parse(Console.ReadLine()); // ввод даты
-                Console.WriteLine("Введите новый номер группы для учащегося: "); // вывод
-                student.groupNumber = int.Parse(Console.ReadLine()); // ввод группы
-
-                student.Сonclusion(); // метод вывода информации
+                arabic -= currentValue; // -
             }
             else
             {
-                return; // возврат
+                arabic += currentValue;  // +
             }
+        }
+        Console.WriteLine($"Арабское число: {arabic}");
+    }
+
+    // буква = число
+    static int translatingNumbers(char roman)
+    {
+        switch(roman)
+        {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D':  return 500;
+            case 'M': return 1000;
+            default: return 0;
         }
     }
 }
